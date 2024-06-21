@@ -58,7 +58,7 @@ form input {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
   font-size: 0.8rem;
-  text-align: center;
+  /* text-align: center; */
 }
 
 form input:focus {
@@ -125,13 +125,13 @@ form button:hover {
 }
 
 .todo-item .actions {
-  margin-inline: 20px;
+  margin-inline: 5px;
 }
 
 .todo-item .actions .delete,
 .todo-item .actions .edit {
   font-size: 1rem;
-  padding: 7px;
+  padding: 7px 10px;
   border-radius: 5px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border: none;

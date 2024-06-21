@@ -7,6 +7,8 @@
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css" />
+
 </head>
 
 <body>
@@ -33,7 +35,14 @@
         </div>
     </div>
 
+    <sl-alert id="warning-popup" variant="warning" duration="3000" closable>
+        <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+        <strong>Duplicate Entry</strong><br />
+        Todo already Exist
+    </sl-alert>
 
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
     <script src="./js/script.js"></script>
 </body>
 
