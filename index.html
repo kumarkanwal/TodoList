@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -21,7 +22,12 @@
 
             <div id="todos-container">
                 <div class="todo-item">
-                    <input type="text" value="" readonly>
+                    <input type="text" value="complete todolist" readonly>
+
+                    <div class="actions">
+                        <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="delete"><i class="fa-solid fa-trash"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
