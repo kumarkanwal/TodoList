@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css" />
 
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -23,8 +23,12 @@
             </form>
 
             <div id="todos-container">
+
                 <div class="todo-item">
-                    <input type="text" value="complete todolist" readonly>
+                    <div class="data">
+                        <input type="checkbox">
+                        <input type="text" value="Complete TodoList project" readonly>
+                    </div>
 
                     <div class="actions">
                         <button class="edit"><i class="fa-solid fa-pen-to-square"></i></button>

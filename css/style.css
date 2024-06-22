@@ -109,7 +109,17 @@ form button:hover {
   margin: 5px;
 }
 
-.todo-item input {
+.todo-item .data {
+  display: flex;
+  flex: 1;
+
+  align-items: center;
+}
+
+.todo-item .data > input[type="checkbox"] {
+  padding: 5px;
+}
+.todo-item .data > input[type="text"] {
   flex: 1;
   border: none;
   border-radius: 50px;
@@ -119,13 +129,15 @@ form button:hover {
   font-size: 1rem;
 }
 
-.todo-item input:focus {
+.todo-item input[type="text"]:focus {
   border: none;
   outline: none;
 }
 
 .todo-item .actions {
   margin-inline: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .todo-item .actions .delete,
