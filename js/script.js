@@ -3,13 +3,13 @@ const todo_input = document.getElementById('todo-input');
 const todos_container = document.getElementById('todos-container');
 const warning_pupup = document.getElementById('warning-popup');
 
+
 // get data from local storage 
 function get_Data_LocalStorage() {
     return JSON.parse(localStorage.getItem("todosData"));
 }
 
 let local_Storage_Data = get_Data_LocalStorage();
-console.log(local_Storage_Data)
 
 // adding all todos to todo container 
 local_Storage_Data.todos.forEach(todo => Create_Todo_Item(todo));
@@ -68,6 +68,12 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
 
     const todo_checkbox = document.createElement('input');
     todo_checkbox.type = "checkbox";
+
+    // checking status of todo from local storage, completed or not
+
+    if (todo_completed) {
+        todo_checkbox.checked = true;
+    }
 
     let todo_input = document.createElement('input');
     todo_input.value = todo_name;
