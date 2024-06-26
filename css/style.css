@@ -4,6 +4,7 @@
   --white: rgb(255, 255, 255);
   --aqua: rgb(96, 255, 202);
   --dark-aqua: rgb(87, 230, 182);
+  --checked: rgb(30, 230, 15);
   --light-aqua: rgb(195, 255, 235);
 }
 
@@ -81,6 +82,13 @@ form button:hover {
   background-color: var(--dark-aqua);
 }
 
+.checked {
+  background-color: var(--checked) !important;
+}
+
+.text_overline {
+  text-decoration: line-through;
+}
 #todos-container {
   width: 50%;
   min-height: 70vh;

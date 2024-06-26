@@ -69,13 +69,14 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
     todo_checkbox.type = "checkbox";
 
     // checking status of todo from local storage, completed or not.
-    todo_completed && (todo_checkbox.checked = true);
+
 
 
 
     let todo_input = document.createElement('input');
     todo_input.value = todo_name;
     todo_input.type = "text";
+    todo_input.className = "todo_text"
     todo_input.readOnly = true;
 
     let todo_actions = document.createElement('div');
@@ -89,6 +90,15 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
     todo_edit_btn.className = "edit";
     todo_edit_btn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
 
+    // checked status and styling 
+
+
+    if (todo_completed) {
+        (todo_checkbox.checked = true);
+        todo_item.classList.add('checked');
+        todo_input.classList.add('text_overline');
+    }
+
     todo_data.appendChild(todo_checkbox);
     todo_data.appendChild(todo_input);
     todo_actions.appendChild(todo_edit_btn);
@@ -101,6 +111,10 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
         delete_todo_item(todo_id, todo_item)
     })
 
+    todo_checkbox.addEventListener('change', () => {
+        todo_status_update(todo_id, todo_item, todo_checkbox)
+    })
+
 }
 
 function delete_todo_item(todo_id, todo_element) {
@@ -108,12 +122,46 @@ function delete_todo_item(todo_id, todo_element) {
     let filteredTodos = local_Storage_Data.todos.filter(todo => todo.id != todo_id);
     local_Storage_Data.todos = filteredTodos;
 
-
-
-
     localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
-
     todos_container.removeChild(todo_element);
+
+}
+
+function todo_status_update(todo_id, todo_element, todo_checkbox) {
+
+    // bg change 
+    // (todo_element.classList.toggle('checked'));
+
+    // find todo from localstorage to update completed status 
+    let todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
+
+    if (todo_checkbox.checked) {
+
+        todo_item.completed = todo_checkbox.checked;
+        todo_element.classList.add('checked');
+        todo_element.querySelector('.todo_text').classList.add('text_overline');
+
+        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+
+
+        // todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
+
+
+
+    } else {
+        todo_item.completed = todo_checkbox.checked;
+        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+        todo_element.classList.remove('checked');
+        todo_element.querySelector('.todo_text').classList.remove('text_overline');
+    }
+
+
+    // console.log(todo_checkbox.checked);
+    // console.log(loca);
+    // console.log(todo_id);
+    // console.log(todo_element);
+
+
 
 
 
