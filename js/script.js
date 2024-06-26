@@ -3,8 +3,6 @@ const todo_input = document.getElementById('todo-input');
 const todos_container = document.getElementById('todos-container');
 const warning_pupup = document.getElementById('warning-popup');
 
-
-
 // get data from local storage 
 function get_Data_LocalStorage() {
     const initial_localstorage_structure = {
@@ -33,14 +31,15 @@ todo_form.addEventListener('submit', e => {
         warning_pupup.toast()
 
     } else {
-        Create_Todo_Item({ "todo": todo_input_data });
 
         let new_todo_id = ++local_Storage_Data.id;
+        console.log(new_todo_id);
 
         const new_todo_data = { "id": new_todo_id, "todo": todo_input_data, "completed": false };
         local_Storage_Data.todos.push(new_todo_data);
         local_Storage_Data.id = new_todo_id;
 
+        Create_Todo_Item({ "id": new_todo_id, "todo": todo_input_data });
         localStorage.setItem("todosData", JSON.stringify(local_Storage_Data));
         // local_Storage_Data.
 
@@ -108,6 +107,7 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
     todos_container.appendChild(todo_item);
 
     todo_delete_btn.addEventListener('click', () => {
+        console.log("before id", todo_id);
         delete_todo_item(todo_id, todo_item)
     })
 
@@ -117,16 +117,20 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
 
 }
 
+// delete todo
 function delete_todo_item(todo_id, todo_element) {
 
+    console.log(local_Storage_Data, todo_id);
     let filteredTodos = local_Storage_Data.todos.filter(todo => todo.id != todo_id);
     local_Storage_Data.todos = filteredTodos;
 
     localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
-    todos_container.removeChild(todo_element);
 
+
+    todos_container.removeChild(todo_element);
 }
 
+// complete todo status update
 function todo_status_update(todo_id, todo_element, todo_checkbox) {
 
     // bg change 
@@ -170,17 +174,5 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
 // Create_Todo_Item();
 // update todo
 
-// delete todo
 
-// function deleteTodo({ "id": todo_id }, todo_item) {
-
-//     let item = todo_item.querySelector('.delete');
-//     item.addEventListener('click', () => {
-//         console.log(item);
-//     })
-
-//     console.log(item);
-
-
-// }
 
