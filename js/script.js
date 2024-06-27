@@ -25,7 +25,6 @@ todo_form.addEventListener('submit', e => {
     let todo_input_data = todo_input.value.trim();
     let duplicate_entry = local_Storage_Data.todos.some(element => element.todo === todo_input_data);
 
-
     // show pop up on duplicate enty 
     if (duplicate_entry) {
         warning_pupup.toast()
@@ -33,7 +32,6 @@ todo_form.addEventListener('submit', e => {
     } else {
 
         let new_todo_id = ++local_Storage_Data.id;
-        console.log(new_todo_id);
 
         const new_todo_data = { "id": new_todo_id, "todo": todo_input_data, "completed": false };
         local_Storage_Data.todos.push(new_todo_data);
@@ -56,7 +54,9 @@ todo_form.addEventListener('submit', e => {
 
 // create todo
 
-function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_completed }) {
+function Create_Todo_Item(todoData) {
+
+    const { "id": todo_id, "todo": todo_name, "completed": todo_completed } = todoData;
 
     const todo_item = document.createElement('div');
     todo_item.className = "todo-item";
@@ -107,8 +107,12 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
     todos_container.appendChild(todo_item);
 
     todo_delete_btn.addEventListener('click', () => {
-        console.log("before id", todo_id);
+
         delete_todo_item(todo_id, todo_item)
+    })
+
+    todo_edit_btn.addEventListener('click', (e) => {
+        edit_todo_item(e, todoData, todo_item)
     })
 
     todo_checkbox.addEventListener('change', () => {
@@ -120,7 +124,7 @@ function Create_Todo_Item({ "id": todo_id, "todo": todo_name, "completed": todo_
 // delete todo
 function delete_todo_item(todo_id, todo_element) {
 
-    console.log(local_Storage_Data, todo_id);
+
     let filteredTodos = local_Storage_Data.todos.filter(todo => todo.id != todo_id);
     local_Storage_Data.todos = filteredTodos;
 
@@ -133,8 +137,6 @@ function delete_todo_item(todo_id, todo_element) {
 // complete todo status update
 function todo_status_update(todo_id, todo_element, todo_checkbox) {
 
-    // bg change 
-    // (todo_element.classList.toggle('checked'));
 
     // find todo from localstorage to update completed status 
     let todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
@@ -147,11 +149,6 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
 
         localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
 
-
-        // todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
-
-
-
     } else {
         todo_item.completed = todo_checkbox.checked;
         localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
@@ -159,20 +156,92 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
         todo_element.querySelector('.todo_text').classList.remove('text_overline');
     }
 
+}
 
-    // console.log(todo_checkbox.checked);
-    // console.log(loca);
-    // console.log(todo_id);
-    // console.log(todo_element);
+function edit_todo_item(e, todoData, todo_element) {
+
+    // local_Storage_Data.find(local_Storage_Data)
+    function isAnotherTodoEditing() {
+        let todos = todos_container.querySelectorAll('.todo-item');
+
+        // remove save class if already exist 
+
+        todos.forEach(todo => {
+            if (todo.querySelector('.save')) {
+
+                todo.querySelector('.save').innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
+                todo.querySelector('.save').classList.remove('save');
+                todo.querySelector('.todo_text').readOnly = true;
+                todo.querySelector('.todo_text').style.backgroundColor = "transparent";
+            }
+        })
+
+    }
+
+    function saveChanges() {
+        edit_btn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        edit_btn.classList.remove('save');
+        todo_text.readOnly = true;
+        todo_text.style.backgroundColor = 'transparent';
+
+        let edited_todo_value = todo_text.value.trim();
+        todo_text.value = edited_todo_value;
+
+        todoData.todo = edited_todo_value
+        local_Storage_Data.todos.find(todo => todo.id === todoData.id).todo = todoData.todo
+
+        local_Storage_Data.todos.find(todo => todo.id === todoData.id)
+
+        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+
+        console.log(edited_todo_value);
+        console.log(todoData.todo);
+        console.log(local_Storage_Data);
 
 
 
+
+    }
+
+    let edit_btn = todo_element.querySelector('.edit');
+    let todo_text = todo_element.querySelector('.todo_text');
+
+    if (!edit_btn.classList.contains('save')) {
+
+        // checking wheather any other todo under editing 
+        isAnotherTodoEditing();
+
+        // Enter edit mode
+        edit_btn.innerHTML = '<i class="fa-regular fa-floppy-disk"></i>';
+        edit_btn.classList.add('save');
+        todo_text.readOnly = false;
+        todo_text.style.backgroundColor = 'white';
+        todo_text.focus();
+
+        todo_text.addEventListener('keydown', enterKey);
+
+        function enterKey(e) {
+
+            if (e.key === "Enter") {
+                saveChanges();
+                todo_text.removeEventListener('keydown', enterKey);
+            }
+
+        }
+
+    } else {
+
+        // checking wheather any other todo under editing
+        isAnotherTodoEditing();
+
+        // Save changes
+        saveChanges();
+
+    }
 
 
 }
 
-// Create_Todo_Item();
-// update todo
 
 
 
