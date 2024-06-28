@@ -96,6 +96,10 @@ function Create_Todo_Item(todoData) {
         (todo_checkbox.checked = true);
         todo_item.classList.add('checked');
         todo_input.classList.add('text_overline');
+
+        todo_edit_btn.disabled = true;
+        todo_edit_btn.style.backgroundColor = "transparent"
+
     }
 
     todo_data.appendChild(todo_checkbox);
@@ -142,6 +146,11 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
     let todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
 
     if (todo_checkbox.checked) {
+        console.log(todo_element);
+        todo_element.querySelector('.edit').disabled = false;
+        todo_element.querySelector('.edit').style.backgroundColor = 'transparent';
+        todo_element.querySelector('.todo_text').readOnly = true;
+        todo_element.querySelector('.todo_text').style.backgroundColor = "transparent"
 
         todo_item.completed = todo_checkbox.checked;
         todo_element.classList.add('checked');
@@ -150,6 +159,9 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
         localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
 
     } else {
+        todo_element.querySelector('.edit').disabled = false;
+        todo_element.querySelector('.edit').style.backgroundColor = 'white';
+
         todo_item.completed = todo_checkbox.checked;
         localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
         todo_element.classList.remove('checked');
@@ -159,6 +171,7 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
 }
 
 function edit_todo_item(e, todoData, todo_element) {
+    // console.log();
 
     // local_Storage_Data.find(local_Storage_Data)
     function isAnotherTodoEditing() {
@@ -193,29 +206,27 @@ function edit_todo_item(e, todoData, todo_element) {
         local_Storage_Data.todos.find(todo => todo.id === todoData.id)
 
         localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
-
-        console.log(edited_todo_value);
-        console.log(todoData.todo);
-        console.log(local_Storage_Data);
-
-
-
-
     }
 
     let edit_btn = todo_element.querySelector('.edit');
     let todo_text = todo_element.querySelector('.todo_text');
 
-    if (!edit_btn.classList.contains('save')) {
+    if (todoData.completed) {
+
+        edit_btn.disabled = true;
+
+    }
+    else if (!edit_btn.classList.contains('save')) {
 
         // checking wheather any other todo under editing 
         isAnotherTodoEditing();
 
         // Enter edit mode
+        edit_btn.disabled = false;
+        todo_text.style.backgroundColor = 'white';
         edit_btn.innerHTML = '<i class="fa-regular fa-floppy-disk"></i>';
         edit_btn.classList.add('save');
         todo_text.readOnly = false;
-        todo_text.style.backgroundColor = 'white';
         todo_text.focus();
 
         todo_text.addEventListener('keydown', enterKey);
