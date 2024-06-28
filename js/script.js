@@ -2,6 +2,9 @@ const todo_form = document.querySelector('form')
 const todo_input = document.getElementById('todo-input');
 const todos_container = document.getElementById('todos-container');
 const warning_pupup = document.getElementById('warning-popup');
+const delete_all_btn = document.getElementById('delete_all_btn');
+
+
 
 // get data from local storage 
 function get_Data_LocalStorage() {
@@ -51,7 +54,18 @@ todo_form.addEventListener('submit', e => {
     // call function to create and add into todolist
 })
 
+// delete All todos 
+delete_all_btn.addEventListener('click', () => {
+    let delete_all_todos = confirm("Do you want to delete all todos?");
 
+    if (delete_all_todos) {
+
+        local_Storage_Data.todos = [];
+        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+
+        location.reload();
+    }
+})
 // create todo
 
 function Create_Todo_Item(todoData) {
@@ -68,8 +82,6 @@ function Create_Todo_Item(todoData) {
     todo_checkbox.type = "checkbox";
 
     // checking status of todo from local storage, completed or not.
-
-
 
 
     let todo_input = document.createElement('input');
@@ -138,7 +150,7 @@ function delete_todo_item(todo_id, todo_element) {
     todos_container.removeChild(todo_element);
 }
 
-// complete todo status update
+// change complete todo status 
 function todo_status_update(todo_id, todo_element, todo_checkbox) {
 
 

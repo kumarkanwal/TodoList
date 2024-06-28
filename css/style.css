@@ -44,7 +44,7 @@ form {
   background-color: var(--light-aqua);
   width: 50%;
   border-radius: 50px;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   display: flex;
@@ -82,6 +82,19 @@ form button:hover {
   background-color: var(--dark-aqua);
 }
 
+#delete_all_container {
+  text-align: end;
+  width: 50%;
+}
+#delete_all_btn {
+  font-size: 0.7rem;
+  padding: 7px 20px;
+  background-color: #c01d00;
+  color: white;
+  border: none;
+  border-radius: 10px;
+}
+
 .checked {
   background-color: var(--checked) !important;
 }
@@ -96,6 +109,7 @@ form button:hover {
 
 @media screen and (max-width: 768px) {
   #todos-container,
+  #delete_all_container,
   form {
     width: 100%;
   }
