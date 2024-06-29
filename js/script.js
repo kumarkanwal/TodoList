@@ -54,18 +54,57 @@ todo_form.addEventListener('submit', e => {
     // call function to create and add into todolist
 })
 
-// delete All todos 
+
+// delete All todos
+
+
 delete_all_btn.addEventListener('click', () => {
-    let delete_all_todos = confirm("Do you want to delete all todos?");
 
-    if (delete_all_todos) {
+    const dialog = document.querySelector('.dialog-focus');
+    const input = dialog.querySelector('sl-input');
+    const openButton = document.querySelector('#delete_all_btn');
+    const closeButton = dialog.querySelector('#close-btn');
+    const ConfirmButton = dialog.querySelector('#confirm-btn');
 
-        local_Storage_Data.todos = [];
-        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+    function DeleteAllCheck() {
+        if (input.value.trim() == "DELETE") {
+            local_Storage_Data.todos = [];
+            localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
 
-        location.reload();
+            location.reload();
+        } else {
+            dialog.hide();
+            input.value = ""
+        }
+    }
+
+    // buttons inside dialog box 
+    openButton.addEventListener('click', () => dialog.show());
+    closeButton.addEventListener('click', () => dialog.hide());
+    ConfirmButton.addEventListener('click', () => {
+
+        DeleteAllCheck();
+
+    });
+
+
+    // Enter button click 
+    dialog.addEventListener('keydown', enterKey);
+    function enterKey(e) {
+
+        if (e.key === "Enter") {
+            DeleteAllCheck();
+            dialog.removeEventListener('keyup', enterKey);
+        }
     }
 })
+
+
+
+
+
+
+
 // create todo
 
 function Create_Todo_Item(todoData) {
@@ -95,7 +134,7 @@ function Create_Todo_Item(todoData) {
 
     let todo_delete_btn = document.createElement('button');
     todo_delete_btn.className = "delete";
-    todo_delete_btn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+    todo_delete_btn.innerHTML = "❌";
 
     let todo_edit_btn = document.createElement('button');
     todo_edit_btn.className = "edit";
@@ -158,7 +197,6 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
     let todo_item = local_Storage_Data.todos.find(todo => todo.id === todo_id);
 
     if (todo_checkbox.checked) {
-        console.log(todo_element);
         todo_element.querySelector('.edit').disabled = false;
         todo_element.querySelector('.edit').style.backgroundColor = 'transparent';
         todo_element.querySelector('.todo_text').readOnly = true;
@@ -183,7 +221,6 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
 }
 
 function edit_todo_item(e, todoData, todo_element) {
-    // console.log();
 
     // local_Storage_Data.find(local_Storage_Data)
     function isAnotherTodoEditing() {
@@ -204,21 +241,36 @@ function edit_todo_item(e, todoData, todo_element) {
     }
 
     function saveChanges() {
+
         edit_btn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
         edit_btn.classList.remove('save');
         todo_text.readOnly = true;
         todo_text.style.backgroundColor = 'transparent';
 
         let edited_todo_value = todo_text.value.trim();
-        todo_text.value = edited_todo_value;
 
-        todoData.todo = edited_todo_value
-        local_Storage_Data.todos.find(todo => todo.id === todoData.id).todo = todoData.todo
+        let similar_todo = local_Storage_Data.todos.some(todo_item => todo_item.todo == edited_todo_value && todo_item.id !== todoData.id);
 
-        local_Storage_Data.todos.find(todo => todo.id === todoData.id)
+        if (similar_todo) {
+            alert("similar todos exist in data");
+            location.reload();
 
-        localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+        } else {
+            todo_text.value = edited_todo_value;
+
+            todoData.todo = edited_todo_value
+            local_Storage_Data.todos.find(todo => todo.id === todoData.id).todo = todoData.todo
+
+            local_Storage_Data.todos.find(todo => todo.id === todoData.id)
+
+            localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
+        }
+
     }
+
+
+
+
 
     let edit_btn = todo_element.querySelector('.edit');
     let todo_text = todo_element.querySelector('.todo_text');
@@ -234,6 +286,8 @@ function edit_todo_item(e, todoData, todo_element) {
         isAnotherTodoEditing();
 
         // Enter edit mode
+
+
         edit_btn.disabled = false;
         todo_text.style.backgroundColor = 'white';
         edit_btn.innerHTML = '<i class="fa-regular fa-floppy-disk"></i>';
@@ -249,7 +303,6 @@ function edit_todo_item(e, todoData, todo_element) {
                 saveChanges();
                 todo_text.removeEventListener('keydown', enterKey);
             }
-
         }
 
     } else {

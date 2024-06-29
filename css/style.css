@@ -1,11 +1,11 @@
 :root {
   --primary-color: blue;
-  --body-background: #9c977b;
+  --body-background: #05668d;
   --white: rgb(255, 255, 255);
-  --aqua: rgb(96, 255, 202);
-  --dark-aqua: rgb(87, 230, 182);
+  --aqua: #00bcd5;
+  --dark-aqua: #00bcd5;
   --checked: rgb(30, 230, 15);
-  --light-aqua: rgb(195, 255, 235);
+  --light-aqua: #54ddef;
 }
 
 * {
@@ -35,7 +35,7 @@ html {
 h1 {
   text-align: center;
   margin: 30px;
-  color: var(white);
+  color: var(--white);
 }
 
 form {
@@ -95,6 +95,12 @@ form button:hover {
   border-radius: 10px;
 }
 
+#close-btn {
+  margin-inline: 5px;
+}
+.dialog-heading {
+  text-align: left;
+}
 .checked {
   background-color: var(--checked) !important;
 }
