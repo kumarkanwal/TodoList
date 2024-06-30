@@ -86,7 +86,8 @@ form button:hover {
   text-align: end;
   width: 50%;
 }
-#delete_all_btn {
+#delete_all_btn,
+#alphabetic-arr {
   font-size: 0.7rem;
   padding: 7px 20px;
   background-color: #c01d00;
@@ -95,11 +96,16 @@ form button:hover {
   border-radius: 10px;
 }
 
+#alphabetic-arr {
+  background-color: rgba(0, 220, 11, 0.33);
+  color: rgb(255, 255, 255);
+}
 #close-btn {
   margin-inline: 5px;
 }
-.dialog-heading {
+#delete_all_dialog {
   text-align: left;
+  visibility: hidden;
 }
 .checked {
   background-color: var(--checked) !important;
@@ -109,7 +115,7 @@ form button:hover {
   text-decoration: line-through;
 }
 #todos-container {
-  width: 50%;
+  min-width: 50%;
   min-height: 70vh;
 }
 
@@ -139,7 +145,7 @@ form button:hover {
 
 .todo-item .data {
   display: flex;
-  flex: 1;
+  width: 100%;
 
   align-items: center;
 }
@@ -148,7 +154,7 @@ form button:hover {
   padding: 5px;
 }
 .todo-item .data > input[type="text"] {
-  flex: 1;
+  width: 100%;
   border: none;
   border-radius: 50px;
   padding-inline: 8px;

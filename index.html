@@ -7,8 +7,8 @@
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css" />
-
     <link rel="stylesheet" href="./css/style.css">
+
 </head>
 
 <body>
@@ -24,13 +24,15 @@
             <div id="delete_all_container">
 
                 <!-- Delete All dialog  -->
-                <sl-dialog label="Do you want delete all Todos?" class="dialog-focus dialog-heading">
-                    <sl-input autofocus placeholder="Type 'DELETE' to delete all todos "></sl-input>
-                    <sl-button slot="footer" id="close-btn" variant="danger">Close</sl-button>
+                <sl-dialog label="Do you want delete all Todos?" id="delete_all_dialog"
+                    class="dialog-focus dialog-heading">
+                    <sl-input autofocus placeholder=" Type 'DELETE' to delete all todos "></sl-input>
+                    <sl-button slot=" footer" id="close-btn" variant="danger">Close</sl-button>
                     <sl-button slot="footer" id="confirm-btn" variant="primary">Confirm</sl-button>
 
                 </sl-dialog>
 
+                <button id="alphabetic-arr">A-Z</button>
                 <button id="delete_all_btn">Delete All</button>
                 <!-- <sl-button id="delete_all_btn">Delete All</sl-button> -->
             </div>

@@ -56,10 +56,9 @@ todo_form.addEventListener('submit', e => {
 
 
 // delete All todos
-
-
 delete_all_btn.addEventListener('click', () => {
 
+    document.getElementById('delete_all_dialog').style.visibility = "visible";
     const dialog = document.querySelector('.dialog-focus');
     const input = dialog.querySelector('sl-input');
     const openButton = document.querySelector('#delete_all_btn');
@@ -98,12 +97,6 @@ delete_all_btn.addEventListener('click', () => {
         }
     }
 })
-
-
-
-
-
-
 
 // create todo
 
@@ -223,6 +216,12 @@ function todo_status_update(todo_id, todo_element, todo_checkbox) {
 function edit_todo_item(e, todoData, todo_element) {
 
     // local_Storage_Data.find(local_Storage_Data)
+    let edit_btn = todo_element.querySelector('.edit');
+    let todo_text = todo_element.querySelector('.todo_text');
+
+    // value before edited value 
+    let before_value = todo_text.value;
+
     function isAnotherTodoEditing() {
         let todos = todos_container.querySelectorAll('.todo-item');
 
@@ -252,8 +251,11 @@ function edit_todo_item(e, todoData, todo_element) {
         let similar_todo = local_Storage_Data.todos.some(todo_item => todo_item.todo == edited_todo_value && todo_item.id !== todoData.id);
 
         if (similar_todo) {
-            alert("similar todos exist in data");
-            location.reload();
+
+            // show pop up on duplicate enty 
+            warning_pupup.toast();
+            todo_text.value = before_value
+
 
         } else {
             todo_text.value = edited_todo_value;
@@ -266,14 +268,16 @@ function edit_todo_item(e, todoData, todo_element) {
             localStorage.setItem('todosData', JSON.stringify(local_Storage_Data));
         }
 
+
+
+
     }
 
 
 
 
 
-    let edit_btn = todo_element.querySelector('.edit');
-    let todo_text = todo_element.querySelector('.todo_text');
+
 
     if (todoData.completed) {
 
@@ -318,6 +322,11 @@ function edit_todo_item(e, todoData, todo_element) {
 
 }
 
+const alphabetic_arr_btn = document.getElementById('alphabetic-arr');
+function alphabetical_ordering() {
+    alphabetic_arr_btn.style.backgroundColor = 'rgb(0, 220, 11)';
+}
 
+alphabetic_arr_btn.addEventListener('click', alphabetical_ordering);
 
 
